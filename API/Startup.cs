@@ -33,13 +33,7 @@ namespace API
 
             services.AddSwaggerDocumentation();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", policy => 
-                {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200/");
-                });
-            });
+            services.AddCors();
 
 
         }
@@ -52,12 +46,13 @@ namespace API
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
+            
+            app.UseCorsMiddleware();
 
             app.UseRouting();
 
             app.UseStaticFiles();
 
-            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 

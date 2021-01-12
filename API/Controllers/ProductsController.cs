@@ -49,7 +49,7 @@ namespace API.Controllers
 
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Product>> GetProduct(int id) 
         {
@@ -62,7 +62,9 @@ namespace API.Controllers
                 return NotFound(new ApiResponse(404));
             }
 
-            return Ok(_mapper.Map<Product, ProductToReturnDto>(product));
+            var productToReturn = _mapper.Map<Product, ProductToReturnDto>(product);
+            
+            return Ok(productToReturn);
         }
 
         [HttpGet("brands")]
